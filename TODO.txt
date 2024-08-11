@@ -1,0 +1,9 @@
+ITERATION 1:
+
+
+
+Link main to server
+
+Link server to Northwind //For a later version, we should have a single server and db. The should be accessible through the net. And access them from different clients.
+
+

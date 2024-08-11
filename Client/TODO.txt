@@ -1,0 +1,21 @@
+1. Add the function to request data
+2. Add a button to request the data.
+3. Display the data using a table or a list.
+
+
+This is the basic function to request data:
+
+function requestData() {
+    fetch(`http://localhost:5000/api/data/products`, {
+        method: 'GET',
+    })
+        .then(response => response.json())
+        .then(data => {...})//Here you should further handle the data...
+        .catch(error => console.error(error));
+}
+
+later we will modify it.
+
+Assume that "data" is an array holding objects each representing a single row.
+The keys will represent the column name and the values the stored values in that row.
+
