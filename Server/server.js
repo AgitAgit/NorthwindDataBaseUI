@@ -1,7 +1,8 @@
 const sql = require('mssql');
 const fs = require('fs');
 
-const config = fs.readFileSync('./config.txt');
+const config = JSON.parse(fs.readFileSync('./config.txt','utf-8'));
+
 
 async function queryDatabase() {
     try {
