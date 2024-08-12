@@ -27,7 +27,7 @@ html {
 }
 
 #header-nav .container {
-    /* display: flex; */
+    display: flex;
 }
 
 #header-nav .brand-container {
@@ -61,11 +61,9 @@ a {
 }
 
 #header-nav .container .search-header {
-    /* width: 9em; */
-    /* position: absolute;
+    position: absolute;
     right: 10%;
-    top: 10%; */
-    /* clear:both; */
+    top: 10%;
     align-self: right;
 }
 
@@ -74,8 +72,8 @@ a {
 }
 /* END HEADER */
 
-/* BODY */
 
+/* BODY */
 #main-container {
     display: flex;
     justify-content: center;

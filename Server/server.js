@@ -37,7 +37,7 @@ app.get('/api/data/products', (req, res) => {
     });
 });
 
-//app.use('/api', routes); TODO: add a routing file
+// app.use('/api', routes); TODO: add a routing file
 
 function connectToDB(){
     try{
@@ -49,9 +49,9 @@ function connectToDB(){
     }
 }
 app.listen(()=>{
-     connectToDB();
-     console.log(`The server has started listening on port ${port}...`);
- });
+    connectToDB();
+    console.log(`The server has started listening on port ${port}...`);
+});
 
 
-//queryDatabase();
+// queryDatabase();
