@@ -29,6 +29,7 @@ async function queryDatabase() {
 app.use(cors());
 app.use(express.json());
 app.get('/api/data/products', (req, res) => {
+    console.log(req);
     sql.query("SELECT TOP 20 * FROM products")
     .then(result => res.json(result))
     .catch(error => {
@@ -48,7 +49,7 @@ function connectToDB(){
         console.log(`error connecting to db:${error}`);
     }
 }
-app.listen(()=>{
+app.listen(port,()=>{
      connectToDB();
      console.log(`The server has started listening on port ${port}...`);
  });
