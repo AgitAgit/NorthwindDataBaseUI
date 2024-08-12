@@ -50,9 +50,9 @@ function connectToDB(){
     }
 }
 app.listen(port,()=>{
-     connectToDB();
-     console.log(`The server has started listening on port ${port}...`);
- });
+    connectToDB();
+    console.log(`The server has started listening on port ${port}...`);
+});
 
 
 // queryDatabase();
