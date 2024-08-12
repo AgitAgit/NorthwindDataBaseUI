@@ -1,3 +1,8 @@
+TODO 2
+display the data returned from getData() somewhere in the UI
+
+
+TODO 1
 1. Add the function to request data
 2. Add a button to request the data.
 3. Display the data using a table or a list.
