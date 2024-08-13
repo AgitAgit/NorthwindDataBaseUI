@@ -2,11 +2,13 @@ const serverPath = 'http://localhost:5000';
 const _searchBtn = document.getElementById('searchBtn');
 const _mainTable = document.getElementById('main-table');
 const _list = document.getElementById('list');
+const _inputSearch = document.getElementById('inputSearch');
 _searchBtn.addEventListener('click', handleSearchClick);
 
 
 function getData(){
-    return fetch(`${serverPath}/api/data/products`, {
+    const tableName = _inputSearch.value;
+    return fetch(`${serverPath}/api/data/${tableName}`, {
         headers: {
             "Content-Type":"application/json"
         },
@@ -18,17 +20,19 @@ function getData(){
 
 async function handleSearchClick(){
     const data = await getData();
-    console.log(data);
+    // console.log(data);
     displayTable(data);
 }
 
 function displayTable(data){
+    _mainTable.innerHTML = ''; //remove previous table 
     const rows = data.recordset;
-    console.log(rows);
+    // console.log(rows);
     const numOfCols = Object.keys(rows[0]).length;
 
     const tableHead = document.createElement("tr");
     _mainTable.appendChild(tableHead);
+    _mainTable.style.visibility = 'visible';
 
     for(const [key,value] of Object.entries(rows[0])){
         const col = document.createElement("th");
@@ -45,14 +49,4 @@ function displayTable(data){
             tableRow.appendChild(cell);
         }
     }
-
 }
-
-function updateList (){
-    for(let i=0;i<5;i++){
-        const item = document.createElement("li");
-        item.textContent = i;
-        _list.appendChild(item);
-    }
-}
-// updateList();
