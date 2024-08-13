@@ -37,7 +37,7 @@ app.get('/api/data/products', (req, res) => {
         res.status(500).send("duck error in the server...");
     });
 });
-
+app.get('/api/data/')
 // app.use('/api', routes); TODO: add a routing file
 
 function connectToDB(){
