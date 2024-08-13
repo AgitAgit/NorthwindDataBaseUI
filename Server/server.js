@@ -28,9 +28,10 @@ async function queryDatabase() {
 
 app.use(cors());
 app.use(express.json());
-app.get('/api/data/products', (req, res) => {
+app.get('/api/data/:tableName', (req, res) => {
     console.log(req);
-    sql.query("SELECT TOP 20 * FROM products")
+    const { tableName } = req.params;
+    sql.query(`SELECT TOP 20 * FROM ${tableName}`)
     .then(result => res.json(result))
     .catch(error => {
         console.log(error);

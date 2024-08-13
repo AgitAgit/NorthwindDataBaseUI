@@ -80,7 +80,16 @@ a {
     margin-top: 2rem;
 }
 
-table {
+#table-container {
+    width: 100px; 
 
 }
+
+table {
+    visibility: hidden;
+    overflow: scroll; 
+    white-space: nowrap; 
+    border: 4 solid #000000; 
+}
+
 /* END BODY */
