@@ -6,26 +6,6 @@ const app = express();
 const config = JSON.parse(fs.readFileSync('./config.txt','utf-8'));
 const port = 5000;
 
-const querys = [`SELECT * FROM orders WHERE shipCountry = 'USA'`,
-                `SELECT productName, unitPrice + 9, categoryID FROM products WHERE productName LIKE '%C%'`,
-                `SELECT categoryID, categoryName, description FROM categories WHERE categoryID > 3 ORDER BY categoryID DESC`,
-                `SELECT COUNT(*) as COUNT, SUM(freight) as SUM, MIN(freight) as MIN, MAX(freight) as MAX, AVG(freight) as AVG FROM orders`
-            ];
-
-async function queryDatabase() {
-    try {
-        await sql.connect(config);
-
-        const result = await sql.query(querys[querys.length - 1]);
-        console.log(result.recordset);
-
-    } catch (err) {
-        console.error(err);
-    } finally {
-        sql.close();
-    }
-}
-
 app.use(cors());
 app.use(express.json());
 app.get('/api/data/:tableName', (req, res) => {
@@ -39,7 +19,6 @@ app.get('/api/data/:tableName', (req, res) => {
     });
 });
 app.get('/api/data/')
-// app.use('/api', routes); TODO: add a routing file
 
 function connectToDB(){
     try{
@@ -54,6 +33,3 @@ app.listen(port,()=>{
     connectToDB();
     console.log(`The server has started listening on port ${port}...`);
 });
-
-
-queryDatabase();
