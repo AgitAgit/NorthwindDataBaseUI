@@ -55,4 +55,4 @@ app.listen(port,()=>{
 });
 
 
-// queryDatabase();
+queryDatabase();
