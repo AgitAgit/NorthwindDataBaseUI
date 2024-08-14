@@ -48,7 +48,10 @@ app.post('/api/login', async function (req,res){
     let user = await sql.query(`SELECT * FROM logins WHERE UserName = '${userName}' AND Password = '${password}'`);
     user = user.recordset[0];
     
-    if(user) res.json('login successful');
+    if(user){ 
+        res.json('login successful');
+        state.currentUser = userName;
+    }
     else res.json('login failed');
 });
 
