@@ -31,10 +31,17 @@
 
     <div id="main-container">
         <div id="login-container">
-            <input id="inputUserName" placeholder="user name">
-            <input id="inputPass" placeholder="password">
-            <button onclick="checkLogin()">LOG IN</button>
-            <button>SIGN UP</button>
+            <h2>LOGIN</h2>
+            <div id="inputsDiv">
+                <p>User name:</p>
+                <input id="inputUserName" placeholder="user name">
+                <p>Password:</p>
+                <input id="inputPass" placeholder="password">
+            </div>
+            <div id="buttonsDiv">
+                <button onclick="checkLogin()">LOG IN</button>
+                <button id="signUpBtn">SIGN UP</button>
+            </div>
         </div>
     </div>
     <script src="./main.js"></script>
