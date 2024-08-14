@@ -65,6 +65,7 @@ function checkLogin(){
     .then(response => response.json())
     .then(data => {
         console.log(data);
+        getState();
     })
     .catch(error => console.log(error));
 }

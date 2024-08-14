@@ -49,10 +49,13 @@ app.post('/api/login', async function (req,res){
     user = user.recordset[0];
     
     if(user){ 
-        res.json('login successful');
         state.currentUser = userName;
+        res.json('login successful');
     }
-    else res.json('login failed');
+    else {
+        state.currentUser = 'guest';
+        res.json('login failed');
+    }
 });
 
 app.listen(port, () => {
