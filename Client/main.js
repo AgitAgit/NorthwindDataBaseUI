@@ -21,10 +21,13 @@ let _inputSearch;
 let _inputUserName;
 let _inputPass = document.getElementById('inputPass');
 
-
+updateLocalState();
 function updateLocalState(currentUser){
     if(currentUser) _state.currentUser = currentUser;
     if(_state.currentPage === 'index.html'){
+        _searchBtn = document.getElementById('searchBtn');
+        _inputSearch = document.getElementById('inputSearch');
+        _mainTable = document.getElementById('main-table')
         _searchBtn.addEventListener('click', handleSearchClick);
     }
     else if(_state.currentPage === 'login.html'){
@@ -39,7 +42,7 @@ function getState(){
     fetch(`${serverPath}/api/data/state`)
     .then(response => response.json())
     .then(state => {
-      updateLocalState(state.currentUser);
+        updateLocalState(state.currentUser);
     })
     .catch(error => console.log(error));
 }
