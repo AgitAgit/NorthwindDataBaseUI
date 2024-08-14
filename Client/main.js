@@ -1,16 +1,72 @@
+//general elements
 const serverPath = 'http://localhost:5000';
-const _searchBtn = document.getElementById('searchBtn');
-const _mainTable = document.getElementById('main-table');
-const _list = document.getElementById('list');
-const _inputSearch = document.getElementById('inputSearch');
-const _inputUserName = document.getElementById('inputUserName');
-const _inputPass = document.getElementById('inputPass');
+const fullPath = window.location.pathname;
+const pageName = fullPath.substring(fullPath.lastIndexOf('/') + 1);
 const _loggedUser = document.getElementById('loggedUser');
-let isLoggedIn = false;
-const state = {};
 
-_searchBtn.addEventListener('click', handleSearchClick);
+const _state = {
+    currentPage : pageName,
+    currentUser : 'guest',
+    refreshView : function(){
+        _loggedUser.textContent = `Hello ${this.currentUser}`;
+    }
+};
 
+//index elements
+let _searchBtn;
+let _mainTable;
+let _inputSearch;
+
+//login elements
+let _inputUserName;
+let _inputPass = document.getElementById('inputPass');
+
+
+function updateLocalState(currentUser){
+    if(currentUser) _state.currentUser = currentUser;
+    if(_state.currentPage === 'index.html'){
+        _searchBtn.addEventListener('click', handleSearchClick);
+    }
+    else if(_state.currentPage === 'login.html'){
+        _inputUserName = document.getElementById('inputUserName');
+        _inputPass = document.getElementById('inputPass');
+
+    }    
+    _state.refreshView();
+}
+
+function getState(){
+    fetch(`${serverPath}/api/data/state`)
+    .then(response => response.json())
+    .then(state => {
+      updateLocalState(state.currentUser);
+    })
+    .catch(error => console.log(error));
+}
+
+function checkLogin(){
+    const user = _inputUserName.value;    
+    const pass = _inputPass.value;
+    console.log("user",user);
+    console.log("pass", pass);
+    fetch(`${serverPath}/api/login`,{
+        method: 'POST',
+        headers:{
+            'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify({
+            userName: user,
+            password: pass
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => console.log(error));
+}
+
+getState();
 
 function getData(){
     const tableName = _inputSearch.value;
@@ -55,30 +111,4 @@ function displayTable(data){
             tableRow.appendChild(cell);
         }
     }
-}
-
-function checkLogin(){
-    isLoggedIn = false;
-    const user = _inputUserName.value;    
-    const pass = _inputPass.value;
-    fetch(`${serverPath}/api/data/Logins`, {
-        headers: {
-            "Content-Type":"application/json"
-        },
-        method: "GET"
-    })
-    .then(response => response.json())
-    .then(data => {
-        const users = data.recordset;
-        console.log(users);
-        
-        for(let i=0;i<users.length;i++){
-            if(users[i].UserName === user && users[i].Password === pass){
-                isLoggedIn = true;                
-                _loggedUser.textContent = `Hello ${user}`; 
-                break;
-            }
-        }
-    })
-    .catch(error => console.log(error));
 }
