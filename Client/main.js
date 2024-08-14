@@ -1,16 +1,37 @@
+//general elements
 const serverPath = 'http://localhost:5000';
-const _searchBtn = document.getElementById('searchBtn');
-const _mainTable = document.getElementById('main-table');
-const _list = document.getElementById('list');
-const _inputSearch = document.getElementById('inputSearch');
-const _inputUserName = document.getElementById('inputUserName');
-const _inputPass = document.getElementById('inputPass');
 const _loggedUser = document.getElementById('loggedUser');
-let isLoggedIn = false;
-const state = {};
+const _state = {
+    currentPage : 'index',
+    currentUser : 'guest',
+    refreshView : function(){
+        _loggedUser.textContent = `Hello ${this.currentUser}`;
+    }
+};
 
-_searchBtn.addEventListener('click', handleSearchClick);
+//index elements
+let _searchBtn;
+let _mainTable;
+let _inputSearch;
 
+//login elements
+let _inputUserName;
+let _inputPass = document.getElementById('inputPass');
+
+
+function updateState(currentPage, currentUser){
+    if(currentPage) _state.currentPage = currentPage;
+    if(currentUser) _state.currentUser = currentUser;
+    if(_state.currentPage === 'index'){
+        _searchBtn.addEventListener('click', handleSearchClick);
+    }
+    else if(_state.currentPage === 'login'){
+        _inputUserName = document.getElementById('inputUserName');
+        _inputPass = document.getElementById('inputPass');
+
+    }    
+    _state.refreshView();
+}
 
 function getData(){
     const tableName = _inputSearch.value;
@@ -58,7 +79,6 @@ function displayTable(data){
 }
 
 function checkLogin(){
-    isLoggedIn = false;
     const user = _inputUserName.value;    
     const pass = _inputPass.value;
     fetch(`${serverPath}/api/data/Logins`, {
@@ -70,12 +90,10 @@ function checkLogin(){
     .then(response => response.json())
     .then(data => {
         const users = data.recordset;
-        console.log(users);
         
         for(let i=0;i<users.length;i++){
             if(users[i].UserName === user && users[i].Password === pass){
-                isLoggedIn = true;                
-                _loggedUser.textContent = `Hello ${user}`; 
+                _isLoggedIn = true;                 
                 break;
             }
         }
