@@ -3,6 +3,9 @@ const _searchBtn = document.getElementById('searchBtn');
 const _mainTable = document.getElementById('main-table');
 const _list = document.getElementById('list');
 const _inputSearch = document.getElementById('inputSearch');
+
+let isLoggedIn = false;
+
 _searchBtn.addEventListener('click', handleSearchClick);
 
 
