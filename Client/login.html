@@ -19,6 +19,7 @@
                     </div>
                 </div>
                 <div class="search-header">
+                    <p id="loggedUser">Hello guest</p>
                     <a href="login.html">LOG IN</a>
                     <a href="login.html">SIGN UP</a>
                 </div>
@@ -27,9 +28,9 @@
     </header>
 
     <div id="main-container">
-        <input placeholder="user name">
-        <input placeholder="password">
-        <button>LOG IN</button>
+        <input id="inputUserName" placeholder="user name">
+        <input id="inputPass" placeholder="password">
+        <button onclick="checkLogin()">LOG IN</button>
         <button>SIGN UP</button>
     </div>
     <script src="./main.js"></script>

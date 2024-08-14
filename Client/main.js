@@ -3,8 +3,11 @@ const _searchBtn = document.getElementById('searchBtn');
 const _mainTable = document.getElementById('main-table');
 const _list = document.getElementById('list');
 const _inputSearch = document.getElementById('inputSearch');
-
+const _inputUserName = document.getElementById('inputUserName');
+const _inputPass = document.getElementById('inputPass');
+const _loggedUser = document.getElementById('loggedUser');
 let isLoggedIn = false;
+const state = {};
 
 _searchBtn.addEventListener('click', handleSearchClick);
 
@@ -52,4 +55,30 @@ function displayTable(data){
             tableRow.appendChild(cell);
         }
     }
+}
+
+function checkLogin(){
+    isLoggedIn = false;
+    const user = _inputUserName.value;    
+    const pass = _inputPass.value;
+    fetch(`${serverPath}/api/data/Logins`, {
+        headers: {
+            "Content-Type":"application/json"
+        },
+        method: "GET"
+    })
+    .then(response => response.json())
+    .then(data => {
+        const users = data.recordset;
+        console.log(users);
+        
+        for(let i=0;i<users.length;i++){
+            if(users[i].UserName === user && users[i].Password === pass){
+                isLoggedIn = true;                
+                _loggedUser.textContent = `Hello ${user}`; 
+                break;
+            }
+        }
+    })
+    .catch(error => console.log(error));
 }
