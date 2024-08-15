@@ -33,6 +33,7 @@ app.get('/api/data/state', (req, res) => {
 
 app.get('/api/data/:tableName', (req, res) => {
     const { tableName } = req.params;
+    
     sql.query(`SELECT TOP 20 * FROM ${tableName}`)
         .then(result => res.json(result))
         .catch(error => {
