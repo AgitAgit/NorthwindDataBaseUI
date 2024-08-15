@@ -9,7 +9,8 @@ const port = 5000;
 
 //client members
 const state = {//use with primitives only!(only a shallow copy is sent to client...)
-    currentUser: 'guest'
+    currentUser: 'guest',
+    id: null
 }
 
 
@@ -50,10 +51,12 @@ app.post('/api/login', async function (req,res){
     
     if(user){ 
         state.currentUser = userName;
-        res.json('login successful');
+        state.id = user.EmployeeID;
+        res.json(`login successful. Welcome ${state.currentUser} your id is:${state.id}`);
     }
     else {
         state.currentUser = 'guest';
+        state.id = null;
         res.json('login failed');
     }
 });
@@ -69,7 +72,7 @@ app.post('/api/signup', async function (req,res){
     if(user){ 
         res.json('this username is already taken...');
     }
-    if(userName === '' || password === ''){
+    else if(userName === '' || password === ''){
         res.json('invalid username or password...');
     }
     else {
