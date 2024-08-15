@@ -70,7 +70,29 @@ function checkLogin(){
     .catch(error => console.log(error));
 }
 
-getState();
+
+function signup(){
+    const user = _inputUserName.value;    
+    const pass = _inputPass.value;
+    console.log("user",user);
+    console.log("pass", pass);
+    fetch(`${serverPath}/api/signup`,{
+        method: 'POST',
+        headers:{
+            'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify({
+            userName: user,
+            password: pass
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => console.log(error));
+}
+
 
 function getData(){
     const tableName = _inputSearch.value;
@@ -95,17 +117,17 @@ function displayTable(data){
     const rows = data.recordset;
     // console.log(rows);
     const numOfCols = Object.keys(rows[0]).length;
-
+    
     const tableHead = document.createElement("tr");
     _mainTable.appendChild(tableHead);
     _mainTable.style.visibility = 'visible';
-
+    
     for(const [key,value] of Object.entries(rows[0])){
         const col = document.createElement("th");
         col.textContent = key;
         tableHead.appendChild(col);
     }
-
+    
     for(let i=0;i<rows.length;i++){
         const tableRow = document.createElement("tr");
         _mainTable.appendChild(tableRow);
@@ -116,3 +138,5 @@ function displayTable(data){
         }
     }
 }
+
+getState();

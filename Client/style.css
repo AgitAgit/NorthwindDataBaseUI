@@ -112,6 +112,21 @@ a {
 }
 
 /* SEARCH */
+input{
+    border: 2px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    transition: border-color 0.3s ease;
+}
+input:focus{
+    border-color: #007BFF;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5)
+}
+input::placeholder{
+    color: #999;
+    font-style: italic;
+}
+
 #main-container .search-header {
     width: 50%;
     margin: 0 auto 2rem;
@@ -122,34 +137,24 @@ a {
 .search-header input[type="text"] {
     width: 100%; /* Full width */
     padding: 8px 16px; /* Padding inside the box */
-    border: 2px solid #ccc; /* Light gray border */
-    border-radius: 5px; /* Rounded corners */
-    transition: border-color 0.3s ease;
 }
-.search-header input[type="text"]:focus {
-    border-color: #007BFF;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5)
-}
-.search-header input[type="text"]::placeholder {
-    color: #999;
-    font-style: italic;
-}
-/* search button */
-.search-header button {
+/* button */
+button{
     background: linear-gradient(to bottom, var(--light-slate-blue) 20%, var(--light-royal-blue) 90%);
     color: white;
     font-weight: 700;
-    border: none; 
-    padding: 0.7rem;
+    border: none;
     border-radius: 2rem; 
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    padding: 0.7rem;
 }
-.search-header button:hover {
+button:hover{
     background: linear-gradient(to bottom, var(--light-slate-blue) 20%, var(--purple) 90%);
     transform: translateY(-2px);
 }
+
+
 /* END SEARCH TABLE */
 
 /* TABLE */
@@ -185,9 +190,32 @@ table {
 
 /* LOGIN & SIGN UP */
 #login-container {
-    width: 50%;
-    margin: 0 auto; 
+    display:grid;
+    grid-template-rows: 1fr 5fr 3fr 1fr;
+    width: 40%;
+    aspect-ratio: 4/5;
+    margin: 0 auto;
+    padding: 1.5rem; 
     border: 2px solid black;
+}
+#inputsDiv{
+    width:100%;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 5%;
+}
+#login-container input{
+}
+#login-container h2{
+    text-align: center;
+}
+#buttonsDiv{
+    grid-row:4;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+#signUpBtn{
+    grid-column:3;
 }
 /* END LOGIN & SIGN UP */
 
@@ -204,5 +232,11 @@ table {
     }
     #header-nav .container .logs-header {
         margin: auto ;
+    }
+}
+
+@media (max-width: 500px){
+    #login-container{
+        width: 60%;
     }
 }

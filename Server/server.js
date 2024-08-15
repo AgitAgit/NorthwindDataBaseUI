@@ -58,6 +58,23 @@ app.post('/api/login', async function (req,res){
     }
 });
 
+app.post('/api/signup', async function (req,res){
+    req = req.body;
+    const userName = req.userName;
+    const password = req.password;
+
+    let user = await sql.query(`SELECT * FROM logins WHERE UserName = '${userName}'`);
+    user = user.recordset[0];
+    
+    if(user){ 
+        res.json('this username is already taken...');
+    }
+    else {
+        sql.query(`INSERT INTO logins (UserName, Password) VALUES('${userName}','${password}')`);
+        res.json('new user added...');
+    }
+});
+
 app.listen(port, () => {
     connectToDB();
     console.log(`The server has started listening on port ${port}...`);
