@@ -70,7 +70,7 @@ app.post('/api/signup', async function (req,res){
         res.json('this username is already taken...');
     }
     else {
-        sql.query(`INSERT INTO logins`)
+        sql.query(`INSERT INTO logins (UserName, Password) VALUES('${userName}','${password}')`);
         res.json('new user added...');
     }
 });
