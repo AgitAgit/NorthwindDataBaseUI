@@ -7,6 +7,7 @@ const _loggedUser = document.getElementById('loggedUser');
 const _state = {
     currentPage : pageName,
     currentUser : 'guest',
+    id: null,
     refreshView : function(){
         _loggedUser.textContent = `Hello ${this.currentUser}`;
     }
@@ -22,8 +23,9 @@ let _inputUserName;
 let _inputPass = document.getElementById('inputPass');
 
 updateLocalState();
-function updateLocalState(currentUser){
+function updateLocalState(currentUser,id){
     if(currentUser) _state.currentUser = currentUser;
+    _state.id = id;
     if(_state.currentPage === 'index.html'){
         _searchBtn = document.getElementById('searchBtn');
         _inputSearch = document.getElementById('inputSearch');
@@ -36,13 +38,14 @@ function updateLocalState(currentUser){
 
     }    
     _state.refreshView();
+    console.log("current local state is:", _state);
 }
 
 function getState(){
     fetch(`${serverPath}/api/data/state`)
     .then(response => response.json())
     .then(state => {
-        updateLocalState(state.currentUser);
+        updateLocalState(state.currentUser, state.id);
     })
     .catch(error => console.log(error));
 }
