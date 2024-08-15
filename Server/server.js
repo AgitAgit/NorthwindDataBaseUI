@@ -60,10 +60,8 @@ app.post('/api/login', async function (req,res){
 
 app.post('/api/signup', async function (req,res){
     req = req.body;
-    const userName = req.userName;
-    const password = req.password;
-    userName = userName.trim();
-    password = password.trim();
+    const userName = req.userName.trim();
+    const password = req.password.trim();
     
     let user = await sql.query(`SELECT * FROM logins WHERE UserName = '${userName}'`);
     user = user.recordset[0];
