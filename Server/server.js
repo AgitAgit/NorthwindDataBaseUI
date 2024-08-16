@@ -31,10 +31,18 @@ app.get('/api/data/state', (req, res) => {
     res.json({ ...state });
 });
 
+app.get('/api/data/tableNames', (req, res) => {
+    sql.query('SELECT name FROM sys.tables')
+    .then(result => res.json(result))
+    .catch(error => {
+        console.log(error);
+        res.status(500).send("duck error in the server...");
+    });
+});
+
 app.get('/api/data/:tableName', (req, res) => {
     const { tableName } = req.params;
-    
-    sql.query(`SELECT TOP 20 * FROM ${tableName}`)
+    sql.query(`SELECT TOP 20 * FROM [${tableName}]`)
         .then(result => res.json(result))
         .catch(error => {
             console.log(error);
