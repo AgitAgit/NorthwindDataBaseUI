@@ -20,10 +20,10 @@ This project focuses on connectivity and adheres to the MVC approach.
 - [Amit Kubani](https://github.com/AgitAgit)
 
 ## Gallery
-- Desktop view index:
+- Desktop view index:<br>
 [<img src="./assets/MobileView.png" height="200"/>](./assets/MobileView.png)
 
-- Mobile view index:
+- Mobile view index:<br>
 [<img src="./assets/DesktopView.png" height="200"/>](./assets/DesktopView.png)
 
--Desktop View login:
+-Desktop View login:<br>
