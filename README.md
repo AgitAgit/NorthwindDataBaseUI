@@ -1,6 +1,6 @@
 # Practice project for a simple fullstack website   
 
-[<img src="./assets/DesktopView.png" width="65" height="65"/>](./assets/DesktopView.png)
+[<img src="./assets/DesktopView.png" width="200"/>](./assets/DesktopView.png)
 
 We used Node.js to connect our mssql database to a vanilla js/css frontend. <br>
 This project focuses on connectivity and adheres to the MVC approach.
