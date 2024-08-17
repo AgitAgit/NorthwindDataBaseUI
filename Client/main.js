@@ -7,6 +7,7 @@ const _loggedUser = document.getElementById('loggedUser');
 const _state = {
     currentPage : pageName,
     currentUser : 'guest',
+    id: null,
     refreshView : function(){
         _loggedUser.textContent = `Hello ${this.currentUser}`;
     }
@@ -16,18 +17,23 @@ const _state = {
 let _searchBtn;
 let _mainTable;
 let _inputSearch;
+let _selectOption;
 
 //login elements
 let _inputUserName;
 let _inputPass = document.getElementById('inputPass');
 
 updateLocalState();
-function updateLocalState(currentUser){
+function updateLocalState(currentUser,id){
     if(currentUser) _state.currentUser = currentUser;
+    _state.id = id;
     if(_state.currentPage === 'index.html'){
         _searchBtn = document.getElementById('searchBtn');
         _inputSearch = document.getElementById('inputSearch');
-        _mainTable = document.getElementById('main-table')
+        _mainTable = document.getElementById('main-table');
+        _selectOption = document.getElementById('selectOption');
+        
+        fillOptions(_selectOption, _inputSearch);
         _searchBtn.addEventListener('click', handleSearchClick);
     }
     else if(_state.currentPage === 'login.html'){
@@ -36,13 +42,14 @@ function updateLocalState(currentUser){
 
     }    
     _state.refreshView();
+    console.log("current local state is:", _state);
 }
 
 function getState(){
     fetch(`${serverPath}/api/data/state`)
     .then(response => response.json())
     .then(state => {
-        updateLocalState(state.currentUser);
+        updateLocalState(state.currentUser, state.id);
     })
     .catch(error => console.log(error));
 }
@@ -71,6 +78,27 @@ function checkLogin(){
 }
 
 
+function fillOptions(selectElement, inputElement, searchBtn){
+    fetch(`${serverPath}/api/data/tableNames`)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.recordset);
+        
+        selectElement.addEventListener('change',()=>{
+            inputElement.value = selectElement.value;
+            handleSearchClick();
+        });
+
+        for(let i = 0; i < data.recordset.length; i++){
+            console.log(data.recordset[i].name);
+            const option = document.createElement('option');
+            option.textContent = data.recordset[i].name;
+            selectElement.appendChild(option);
+        }
+    })
+    .catch(error => console.log(error));
+}
+
 function signup(){
     const user = _inputUserName.value;    
     const pass = _inputPass.value;
@@ -95,7 +123,8 @@ function signup(){
 
 
 function getData(){
-    const tableName = _inputSearch.value;
+    const tableName = _inputSearch.value.trim();
+    if(tableName === '' || tableName === null) return;
     return fetch(`${serverPath}/api/data/${tableName}`, {
         headers: {
             "Content-Type":"application/json"
@@ -113,6 +142,8 @@ async function handleSearchClick(){
 }
 
 function displayTable(data){
+    if(!data) return;
+
     _mainTable.innerHTML = ''; //remove previous table 
     const rows = data.recordset;
     // console.log(rows);

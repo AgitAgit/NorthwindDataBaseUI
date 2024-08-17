@@ -9,7 +9,8 @@ const port = 5000;
 
 //client members
 const state = {//use with primitives only!(only a shallow copy is sent to client...)
-    currentUser: 'guest'
+    currentUser: 'guest',
+    id: null
 }
 
 
@@ -30,9 +31,18 @@ app.get('/api/data/state', (req, res) => {
     res.json({ ...state });
 });
 
+app.get('/api/data/tableNames', (req, res) => {
+    sql.query('SELECT name FROM sys.tables')
+    .then(result => res.json(result))
+    .catch(error => {
+        console.log(error);
+        res.status(500).send("duck error in the server...");
+    });
+});
+
 app.get('/api/data/:tableName', (req, res) => {
     const { tableName } = req.params;
-    sql.query(`SELECT TOP 20 * FROM ${tableName}`)
+    sql.query(`SELECT TOP 20 * FROM [${tableName}]`)
         .then(result => res.json(result))
         .catch(error => {
             console.log(error);
@@ -50,24 +60,29 @@ app.post('/api/login', async function (req,res){
     
     if(user){ 
         state.currentUser = userName;
-        res.json('login successful');
+        state.id = user.EmployeeID;
+        res.json(`login successful. Welcome ${state.currentUser} your id is:${state.id}`);
     }
     else {
         state.currentUser = 'guest';
+        state.id = null;
         res.json('login failed');
     }
 });
 
 app.post('/api/signup', async function (req,res){
     req = req.body;
-    const userName = req.userName;
-    const password = req.password;
-
+    const userName = req.userName.trim();
+    const password = req.password.trim();
+    
     let user = await sql.query(`SELECT * FROM logins WHERE UserName = '${userName}'`);
     user = user.recordset[0];
     
     if(user){ 
         res.json('this username is already taken...');
+    }
+    else if(userName === '' || password === ''){
+        res.json('invalid username or password...');
     }
     else {
         sql.query(`INSERT INTO logins (UserName, Password) VALUES('${userName}','${password}')`);
