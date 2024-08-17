@@ -1,4 +1,6 @@
-# Practice project for a simple fullstack website   [<img src="./projectIcon.jpg" width="65" height="65"/>](./projectIcon.jpg)
+# Practice project for a simple fullstack website   
+
+[<img src="./assets/DesktopView.png" height="200"/>](./assets/DesktopView.png)
 
 We used Node.js to connect our mssql database to a vanilla js/css frontend. <br>
 This project focuses on connectivity and adheres to the MVC approach.
@@ -16,3 +18,12 @@ This project focuses on connectivity and adheres to the MVC approach.
 ## Contributors
 - [Yaniv Ridel](https://github.com/Yanivridel)
 - [Amit Kubani](https://github.com/AgitAgit)
+
+## Gallery
+- Desktop view index:<br>
+[<img src="./assets/MobileView.png" height="200"/>](./assets/MobileView.png)
+
+- Mobile view index:<br>
+[<img src="./assets/DesktopView.png" height="200"/>](./assets/DesktopView.png)
+
+-Desktop View login:<br>
