@@ -18,6 +18,7 @@ let _searchBtn;
 let _mainTable;
 let _inputSearch;
 let _selectOption;
+let _noRows;
 
 //login elements
 let _inputUserName;
@@ -32,7 +33,9 @@ function updateLocalState(currentUser,id){
         _inputSearch = document.getElementById('inputSearch');
         _mainTable = document.getElementById('main-table');
         _selectOption = document.getElementById('selectOption');
+        _noRows = document.getElementById('noRows');
         
+        _noRows.addEventListener('change', handleNoRowsChange);
         fillOptions(_selectOption, _inputSearch);
         _searchBtn.addEventListener('click', handleSearchClick);
     }
@@ -78,7 +81,7 @@ function checkLogin(){
 }
 
 
-function fillOptions(selectElement, inputElement, searchBtn){
+function fillOptions(selectElement, inputElement){
     fetch(`${serverPath}/api/data/tableNames`)
     .then(response => response.json())
     .then(data => {
@@ -122,21 +125,28 @@ function signup(){
 }
 
 
-function getData(){
-    const tableName = _inputSearch.value.trim();
+function getData(tableName,rows){
     if(tableName === '' || tableName === null) return;
-    return fetch(`${serverPath}/api/data/${tableName}`, {
+    return fetch(`${serverPath}/api/data/tables`, {
         headers: {
             "Content-Type":"application/json"
         },
-        method: "GET"
+        body: JSON.stringify({
+            table: tableName,
+            rows: rows
+        }),
+        method: "PUT"
     })
     .then(response => response.json())
     .catch(error => console.log(error));
 }
 
+function handleNoRowsChange(){
+    handleSearchClick();
+}
+
 async function handleSearchClick(){
-    const data = await getData();
+    const data = await getData(_inputSearch.value.trim(), _noRows.value);
     // console.log(data);
     displayTable(data);
 }

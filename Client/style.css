@@ -123,7 +123,7 @@ a {
     max-width: 600px;
     margin: 0 auto 2rem;
     display: grid;
-    grid-template-columns: 2.5fr 1fr;
+    grid-template-columns: 2.5fr 1fr 1fr;
     grid-template-rows: auto;
     gap:0.5rem;
 }
@@ -147,7 +147,7 @@ input::placeholder{
     font-style: italic;
 }
 
-#selectOption {
+select {
     border-radius: 5px;
     padding: 8px 16px;
     color: #857e7e;
@@ -305,12 +305,12 @@ footer {
     }
 }
 
-@media (max-width: 600px){
+@media (max-width: 700px){
     #main-container .search-header {
         grid-template-columns: 1fr;
     }
     .search-button{
-        grid-row: 3;
+        grid-row: 4;
         width: 100%;
     }
 }

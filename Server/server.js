@@ -40,9 +40,15 @@ app.get('/api/data/tableNames', (req, res) => {
     });
 });
 
-app.get('/api/data/:tableName', (req, res) => {
-    const { tableName } = req.params;
-    sql.query(`SELECT TOP 20 * FROM [${tableName}]`)
+app.put('/api/data/tables', (req, res) => {
+    const tableName = req.body.table;
+    const rows = req.body.rows;
+    console.log(`-------------------${tableName}`);
+    console.log(`-------------------${rows}`);
+    let query;
+    if(rows === 'ALL') query = `SELECT * FROM [${tableName}]`;
+    else query = `SELECT TOP ${rows} * FROM [${tableName}]`
+    sql.query(query)
         .then(result => res.json(result))
         .catch(error => {
             console.log(error);
