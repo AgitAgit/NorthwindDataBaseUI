@@ -43,8 +43,6 @@ app.get('/api/data/tableNames', (req, res) => {
 app.put('/api/data/tables', (req, res) => {
     const tableName = req.body.table;
     const rows = req.body.rows;
-    console.log(`-------------------${tableName}`);
-    console.log(`-------------------${rows}`);
     let query;
     if(rows === 'ALL') query = `SELECT * FROM [${tableName}]`;
     else query = `SELECT TOP ${rows} * FROM [${tableName}]`
