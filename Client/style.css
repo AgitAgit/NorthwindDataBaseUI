@@ -206,6 +206,8 @@ table {
     text-align: left;
     background-color: var(--dark-blue);
     color: white;
+    position: sticky;
+    top: -1px;
 }
 /* END TABLE */
 
